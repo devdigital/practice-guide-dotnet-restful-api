@@ -73,3 +73,7 @@ public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwner
           return;
        }
 ```
+
+### Sign out
+
+Use a POST request for sign out.
