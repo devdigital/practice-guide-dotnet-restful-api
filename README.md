@@ -36,3 +36,37 @@ TODO
 
 ## Authentication
 
+### OAuth 2.0
+
+#### Error with user credentials
+
+If the user provides invalid credentials (username or password), the response code should be *400 (Bad Request)*. The response body should contain an *error* parameter that is set to *invalid_request* if the request is malformed, or *invalid_grant* if the credentials are not valid. 
+
+The response body can also contain an optional *error_description* property that contains a human readable description of the error.
+
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json;charset=UTF-8
+    Cache-Control: no-store
+    Pragma: no-cache
+
+    {
+      "error": "invalid_grant",
+      "error_description": "The username or password does not exist."
+    }
+
+See https://tools.ietf.org/html/rfc6749#page-45 for full details.
+    
+When using the [Microsoft OAuth OWIN middleware](https://www.nuget.org/packages/Microsoft.Owin.Security.OAuth), this response can be generated in the `OAuthAuthorizationServerProvider` `GrantResourceOwnerCredentials` method using the *SetError* method of the supplied `OAuthGrantResourceOwnerCredentialsContext`.
+
+    public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+    {
+       using (var userManager = this.userManagerFactory())
+       {
+          var user = await userManager.FindAsync(context.UserName, context.Password);
+ 
+          if (user == null)
+          {
+             context.SetError("invalid_grant", "The username or password does not exist.");
+             return;
+          }
+
