@@ -56,17 +56,18 @@ The response body can also contain an optional *error_description* property that
 
 See https://tools.ietf.org/html/rfc6749#page-45 for full details.
     
-When using the [Microsoft OAuth OWIN middleware](https://www.nuget.org/packages/Microsoft.Owin.Security.OAuth), this response can be generated in the `OAuthAuthorizationServerProvider` `GrantResourceOwnerCredentials` method using the *SetError* method of the supplied `OAuthGrantResourceOwnerCredentialsContext`.
+When using the [Microsoft OAuth OWIN middleware](https://www.nuget.org/packages/Microsoft.Owin.Security.OAuth), this response can be generated in the `OAuthAuthorizationServerProvider` `GrantResourceOwnerCredentials` method using the `SetError` method of the supplied `OAuthGrantResourceOwnerCredentialsContext`.
 
-    public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+```csharp
+public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+{
+    using (var userManager = this.userManagerFactory())
     {
-       using (var userManager = this.userManagerFactory())
-       {
-          var user = await userManager.FindAsync(context.UserName, context.Password);
+       var user = await userManager.FindAsync(context.UserName, context.Password);
  
-          if (user == null)
-          {
-             context.SetError("invalid_grant", "The username or password does not exist.");
-             return;
-          }
-
+       if (user == null)
+       {
+          context.SetError("invalid_grant", "The username or password does not exist.");
+          return;
+       }
+```
