@@ -44,15 +44,17 @@ If the user provides invalid credentials (username or password), the response co
 
 The response body can also contain an optional *error_description* property that contains a human readable description of the error.
 
-    HTTP/1.1 400 Bad Request
-    Content-Type: application/json;charset=UTF-8
-    Cache-Control: no-store
-    Pragma: no-cache
-
-    {
-      "error": "invalid_grant",
-      "error_description": "The username or password does not exist."
-    }
+```http
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-store
+Pragma: no-cache
+    
+{
+    "error": "invalid_grant",
+    "error_description": "The username or password does not exist."
+}
+```
 
 See https://tools.ietf.org/html/rfc6749#page-45 for full details.
     
