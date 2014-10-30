@@ -77,3 +77,11 @@ public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwner
 ### Sign out
 
 Use a POST request for sign out.
+
+## CRUD controllers
+
+### Use Plural Names for API Controllers
+
+```csharp
+public class DocumentsController : ApiController
+```
