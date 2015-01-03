@@ -129,7 +129,7 @@ POST
 }
 ```
 
-Note that this operation is not idempotent. If we keep repeating the same request, additional users named 'john' would continue to be added.
+Note that this operation is not idempotent. If we keep repeating the same request, additional users named 'john' would continue to be added to the *users* collection.
 
 The equivalent create using PUT would specify the URI to use for the new user:
 
@@ -164,6 +164,20 @@ PUT
    "users": [ ... ]
 }
 ```
+
+Note that although these operations can be supported by your API, you may choose in your design not to support them all. For example, you may choose to restrict POST to just creations. Therefore, if you attempt to POST against an existing resource, you may choose to return an error response, rather than updating the resource. 
+
+Likewise, you may feel that a PUT against a collection endpoint is putting too much power into the hands of your clients, and you may choose to return an error response instead.
+
+#### Verb Usage
+
+| Resource                  | GET                      | POST                      | PUT                         | DELETE
+|---------------------------|--------------------------|---------------------------|-----------------------------|-------
+| /users                    | Retrieves the collection | Create an additional item | Updates collection or Error | Error
+| /users/123 (existing)     | Retrieves the item       | Updates item or Error     | Updates item                | Deletes the item
+| /users/123 (non-existing) | Error                    | Error                     | Creates the item            | Error
+
+Note that performing a DELETE on a collection returns an error response. The reason is because DELETE should be idempotent. If the collection is deleted, then repeated requests could end up deleting different collections that have been repopulated.
 
 ### Cools URIs
 
