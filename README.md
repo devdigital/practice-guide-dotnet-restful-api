@@ -16,7 +16,7 @@ TODO
 
 [Web API](http://www.asp.net/web-api) is Microsoft's recommended framework for developing RESTful services.
 
-### Uris
+### URIs
 
 A uniform resource identifier (URI) identifies a resource through a string of characters. A URI can either be a uniform resource name (URN) which identifies a resource by name in a particular namespace, or a uniform resource locator (URL) which both identifies a resource as well as specifying a means of obtaining a representation of the resource. HTTP URIs are examples of URLs.
 
@@ -106,11 +106,64 @@ Note that PATCH is defined as neither idempotent or safe. Depending on how PATCH
 
 #### CRUD
 
- 
+The HTTP verbs align well with the CRUD (Create, Read, Update, Delete) operations provided by most RESTful APIs.
+
+| CRUD Operation | HTTP Method |
+|----------------|-------------|
+| Create         | POST        |
+| Read           | GET         |
+| Update         | PUT         |
+| Delete         | DELETE      |
 
 #### POST vs PUT
 
+There is a misconception that the difference between POST and PUT is that POST is used for create/insert, and PUT is used for updates. However, both verbs can be used for either operation. The real difference is the fact that PUT is idempotent, and POST is not.
 
+For example, you may use POST to insert a new user:
+
+```
+/users
+POST
+{
+   "name": "john" 
+}
+```
+
+Note that this operation is not idempotent. If we keep repeating the same request, additional users named 'john' would continue to be added.
+
+The equivalent create using PUT would specify the URI to use for the new user:
+
+```
+/users/john
+PUT
+{
+   "name": "john"
+}
+```
+
+With PUT, if the resource doesn't exist at the specified URI, then it can be created, rather than returning an error response. If the resource does exist, then an update can occur. Note that both of these operations are idempotent.
+
+Performing an update with POST is possible if the URI references an already existing resource:
+
+```
+/users/john
+POST
+{
+   "name": "paul"
+}
+```
+
+Here, the resource exists and will be updated. If the resource did not exist, unlike PUT, the POST request would have an error response. This particular POST operation is idempotent, but POST in the general case is not idempotent because as we've seen, performing a POST against a collection endpoint is not idempotent.
+
+Whilst performing a POST against a collection will continue creating resources in that collection, a PUT against a collection would replace the entire collection:
+
+```
+/users
+PUT
+{
+   "users": [ ... ]
+}
+```
 
 ### Cools URIs
 
