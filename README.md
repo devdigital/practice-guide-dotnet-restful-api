@@ -116,15 +116,16 @@ Take a design led approach rather than an implementation led approach when deter
 **Avoid**
 ```
 /api/users?ForeName=john&orderby=UpdatedDate
-Where ForeName and UpdatedDate are database table columns
 ```
+
+Here, *ForeName* and *UpdatedDate* refer to database table columns, and the client is free to sort by any database column. Exposing implementation details like this in your URIs makes it very difficult to change your implementation (e.g. rename a table column) without breaking your clients.
 
 **Recommended**
 ```
 /api/users?forename=john&sort=update_date
-Here, forename and sort are design led, and the range of possible domain values 
-for the sort parameter are limited and documented in the API
 ```
+
+Here, forename and sort are design led, and the range of possible domain values for the sort parameter are limited and documented in the API. The URI is implementation agnostic. It may be using a relational database, or it may be using another form of persistence, e.g. a document database. Changing the implementation won't affect the URI, thus making the URI 'cool'.
 
 ### CRUD
 
