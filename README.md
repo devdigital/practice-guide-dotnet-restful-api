@@ -109,7 +109,21 @@ You should aim for clean, succient, descriptive URIs that are instinctive to any
 Retrieve a collection of users.
 ```
 
+#### Do Not Expose Your Implementation
 
+Take a design led approach rather than an implementation led approach when determining your URIs. In other words, the URIs should be implementation agnostic, and your implementation should not leak through and be exposed in your URIs. In other words, your URIs should not be a leaky abstraction.
+
+**Avoid**
+```
+/api/users?ForeName=john&orderby=UpdatedDate
+Where ForeName and UpdatedDate are database table columns
+```
+
+**Recommended**
+```
+/api/users?forename=john&sort=update_date
+Here, forename and sort are design led, and the range of possible domain values for the sort parameter are limited and documented in the API
+```
 
 ### CRUD
 
