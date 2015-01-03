@@ -2,8 +2,4 @@
 
 *Opinionated .NET RESTful API practice guide by [@devdigital](//twitter.com/devdigital)*
 
-## Table of Contents
-
-   1. [REST](#rest)
-   2. [Levels of Service](#levels-of-service)
-   3. [Authentication](#authentication)
+Visit the [wiki](https://github.com/devdigital/practice-guide-dotnet-restful-api/wiki)!
