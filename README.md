@@ -122,7 +122,8 @@ Where ForeName and UpdatedDate are database table columns
 **Recommended**
 ```
 /api/users?forename=john&sort=update_date
-Here, forename and sort are design led, and the range of possible domain values for the sort parameter are limited and documented in the API
+Here, forename and sort are design led, and the range of possible domain values 
+for the sort parameter are limited and documented in the API
 ```
 
 ### CRUD
