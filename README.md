@@ -65,7 +65,9 @@ TODO
 HTTP defines methods (also known as *verbs*) to indicate the desired action on a particular resource.
 
 [HTTP/1.0](http://www.w3.org/Protocols/HTTP/1.0/spec.html) defined the GET, POST, and HEAD methods.
+
 [HTTP/1.1](http://www.w3.org/Protocols/rfc2616/rfc2616.html) added the OPTIONS, PUT, DELETE, TRACE, and CONNECT methods.
+
 [RFC 5889](http://tools.ietf.org/html/rfc5789) specified the PATCH method.
 
 * *GET* - retreives data
@@ -76,13 +78,37 @@ HTTP defines methods (also known as *verbs*) to indicate the desired action on a
 * *DELETE* - deletes the specified resource
 * *TRACE* - echoes back the recieved request so that a client can see what (if any) changes or additions have been made by intermediate servers
 * *OPTIONS* - returns the HTTP methods that the server supports for the specified URI
-* *CONNECT* - 
+* *CONNECT* - converts the request connection to a transparent TCP/IP tunnel, usually to facilitate SSL-encrypted communication
 
-#### Safe
+#### Safe Methods
 
+Some methods are designed for information retrieval only, and are defined as *safe* in that they should not change the state of the server. They should not have any side effects. Safe methods can be cached, prefetched without any repercussions to the resource. Web crawlers also generally only use GET requests to index sites, so it's vital that any GET request to a RESTful API does not have any side effects on the resources accessed.
 
+#### Idempotent Methods
 
-#### Idempotent
+In contrast, an idempotent method does have side effects on the resource, but what differentiates it from a non-safe, non-idempotent method is that if you call an idempotent methods once or call it N times, it has the same outcome. Idempotency is important in building a fault-tolerant API. The client can re-try idempotent methods knowing that the outcome will be the same no matter the number of retries.
+
+Note that all safe methods are also idempotent, but not all idempotent methods are safe.
+
+#### Method Summary
+
+| HTTP Method | Idempotent? | Safe? |
+|-------------|-------------|-------|
+| HEAD        | Yes         | Yes   |
+| OPTIONS     | Yes         | Yes   |
+| GET         | Yes         | Yes   |
+| POST        | No          | No    |
+| PUT         | Yes         | No    |
+| DELETE      | Yes         | No    |
+| PATCH       | No          | No    |
+
+Note that PATCH is defined as neither idempotent or safe. Depending on how PATCH is implemented, it *could* be idempotent, however it may not be. For example, the entity sent in a PATCH request may define *from* and *to* values for different entity fields, therefore the effect of executing the request once will be different to N times (subsequent times would result in a failure response as the *from* value no longer exists). 
+
+#### CRUD
+
+ 
+
+#### POST vs PUT
 
 
 
