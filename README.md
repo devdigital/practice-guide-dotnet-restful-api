@@ -62,6 +62,30 @@ TODO
 
 ### HTTP Methods (or Verbs)
 
+HTTP defines methods (also known as *verbs*) to indicate the desired action on a particular resource.
+
+[HTTP/1.0](http://www.w3.org/Protocols/HTTP/1.0/spec.html) defined the GET, POST, and HEAD methods.
+[HTTP/1.1](http://www.w3.org/Protocols/rfc2616/rfc2616.html) added the OPTIONS, PUT, DELETE, TRACE, and CONNECT methods.
+[RFC 5889](http://tools.ietf.org/html/rfc5789) specified the PATCH method.
+
+* *GET* - retreives data
+* *HEAD* - identical to GET except the response body should be omitted
+* *POST* - request that the server should accept the entity enclosed in the request as a new subordinate of the web resource identified by the URI
+* *PUT* - requests that the enclosed entity be stored under the supplied URI, if the resource exists it is modifed, otherwise the server can create the resource with that URI
+* *PATCH* - like PUT, but allows partial updates as the enclosed entity describes instructions on how a resource currently residing on the server should be modified, rather than being a complete modified replacement
+* *DELETE* - deletes the specified resource
+* *TRACE* - echoes back the recieved request so that a client can see what (if any) changes or additions have been made by intermediate servers
+* *OPTIONS* - returns the HTTP methods that the server supports for the specified URI
+* *CONNECT* - 
+
+#### Safe
+
+
+
+#### Idempotent
+
+
+
 ### Cools URIs
 
 What differentiates a URI from a cool URI, is that *a cool URI does not change*.
@@ -172,7 +196,7 @@ Here, *ForeName* and *UpdatedDate* refer to database table columns, and the clie
 
 **Recommended**
 ```
-/users?forename=john&sort=update_date
+/users?forename=john&sort=update-date
 ```
 
 Here, forename and sort are design led, and the range of possible domain values for the sort parameter are limited and documented in the API. The URI is implementation agnostic. It may be using a relational database, or it may be using another form of persistence, e.g. a document database. Changing the implementation won't affect the URI, thus making the URI 'cool'.
