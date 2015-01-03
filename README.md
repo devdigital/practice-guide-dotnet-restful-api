@@ -64,7 +64,52 @@ TODO
 
 ### Cools URIs
 
-TODO
+What differentiates a URI from a cool URI, is that *a cool URI does not change*.
+
+This is an incredibly important concept in the design of a RESTful API. So much so, that it should be the driver for your API design.
+
+#### Favour Nouns over Verbs
+
+As HTTP offers HTTP methods or verbs within an HTTP request, a client already has a mechanism available for specifying the action that they wish to take on a resource. Therefore, your URIs should not contain verbs, but rather the nouns that describe the resource that the client will take action on:
+
+**Avoid**
+```
+/api/getUser
+/api/deleteUser
+```
+
+**Recommended**
+```
+/api/users/:username
+Use the GET or DELETE HTTP verb within the request to specify the action
+```
+
+#### Favour Plurals over Singular
+
+You should use plurals to represent a collection of resources. Clients can perform actions against a specific resource using an additional resource identifier.
+
+**Avoid**
+```
+/api/user
+/api/user/:username
+```
+
+**Recommended**
+```
+/api/users
+/api/users/:username
+```
+
+#### Keep them Clean
+
+You should aim for clean, succient, descriptive URIs that are instinctive to any clients using your API. For example:
+
+```
+/api/users
+Retrieve a collection of users.
+```
+
+
 
 ### CRUD
 
